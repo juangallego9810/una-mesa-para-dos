@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+<!-- ═══ TÍTULO Y PREVISUALIZACIÓN EN WHATSAPP ═══ -->
+<title>Una mesa para dos</title>
+<meta name="description" content="Tengo algo que proponerte. Ábrelo.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Una mesa para dos">
+<meta property="og:description" content="Tengo algo que proponerte. Ábrelo.">
+<!-- Opcional: sube una foto.jpg al repositorio y pon aquí su URL completa -->
+<!-- <meta property="og:image" content="https://TUUSUARIO.github.io/TUREPO/foto.jpg"> -->
+<meta name="theme-color" content="#3B0F1D">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Karla:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ══════════════════════════════════════════════
+   PALETA · mesa de vino oscuro, papel de carta,
+   tinta cálida, una sola chispa de brasa
+   ══════════════════════════════════════════════ */
+:root{
+  --mesa:#3B0F1D;
+  --mesa-hondo:#22070E;
+  --papel:#F7EFE2;
+  --papel-borde:#E3D3BB;
+  --tinta:#33261F;
+  --tinta-suave:#6E5A4D;
+  --vino:#8E2740;
+  --brasa:#E0A33F;
+
+  --serif:"Cormorant Garamond",Georgia,serif;
+  --sans:"Karla","Helvetica Neue",Arial,sans-serif;
+  --mano:"Caveat",cursive;
+
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*,*::before,*::after{box-sizing:inherit}
+
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{
+  margin:0;min-height:100%;
+  font-family:var(--sans);
+  font-size:17px;line-height:1.6;
+  color:var(--papel);
+  background:var(--mesa-hondo);
+  background-image:
+    radial-gradient(120% 80% at 50% 12%, rgba(224,163,63,.16), transparent 62%),
+    radial-gradient(100% 100% at 50% 50%, var(--mesa), var(--mesa-hondo) 78%);
+  background-attachment:fixed;
+  display:flex;align-items:center;justify-content:center;
+  padding:22px 16px;
+  overflow-x:hidden;
+}
+
+/* ─── ESCENA: las tres vistas viven apiladas ─── */
+.escena{width:100%;max-width:420px;position:relative}
+.vista{
+  transition:opacity .5s ease, transform .6s cubic-bezier(.2,.7,.3,1);
+}
+.vista[hidden]{display:none}
+
+/* ══════════════════════════════════════════════
+   1 · PORTADA — la carta cerrada
+   ══════════════════════════════════════════════ */
+.portada{
+  text-align:center;
+  padding:12px 4px 4px;
+  cursor:pointer;
+  user-select:none;
+}
+body.abierta .portada{opacity:0;transform:translateY(-26px) scale(.97);pointer-events:none}
+
+/* La vela */
+.vela{margin:0 auto 34px;width:18px;position:relative}
+.llama{
+  width:15px;height:26px;margin:0 auto;
+  background:radial-gradient(ellipse at 50% 72%, #FFF3D0 0%, var(--brasa) 42%, #C2521E 76%, rgba(194,82,30,0) 100%);
+  border-radius:50% 50% 46% 46% / 66% 66% 34% 34%;
+  filter:blur(.4px);
+  transform-origin:50% 100%;
+  animation:titilar 2.6s ease-in-out infinite;
+}
+.llama::after{
+  content:"";position:absolute;inset:-46px -60px -30px;
+  background:radial-gradient(circle at 50% 42%, rgba(224,163,63,.30), rgba(224,163,63,0) 68%);
+  pointer-events:none;
+}
+.cirio{
+  width:18px;height:52px;margin:2px auto 0;border-radius:3px 3px 1px 1px;
+  background:linear-gradient(180deg,#F3E7D4,#CDB897 62%,#9C8768);
+}
+@keyframes titilar{
+  0%,100%{transform:scale(1) rotate(-1.5deg)}
+  35%{transform:scale(1.07,.95) rotate(2deg)}
+  62%{transform:scale(.94,1.06) rotate(-2deg)}
+}
+
+.invitada{
+  font-family:var(--serif);font-style:italic;font-weight:300;
+  font-size:1.05rem;color:rgba(247,239,226,.62);
+  margin:0 0 18px;letter-spacing:.02em;
+}
+
+/* Monograma */
+.monograma{
+  width:132px;height:132px;margin:0 auto 26px;
+  border:1px solid rgba(224,163,63,.5);
+  border-radius:50%;
+  display:grid;place-items:center;
+  position:relative;
+}
+.monograma::before{
+  content:"";position:absolute;inset:7px;border-radius:50%;
+  border:1px solid rgba(224,163,63,.22);
+}
+.iniciales{
+  font-family:var(--serif);font-weight:400;
+  font-size:2.2rem;color:var(--brasa);letter-spacing:.06em;
+}
+.iniciales span{font-style:italic;font-size:1.5rem;opacity:.72;margin:0 .1em}
+
+.portada h1{
+  font-family:var(--serif);font-weight:300;
+  font-size:clamp(2.1rem,10vw,2.9rem);
+  line-height:1.1;margin:0 0 14px;color:var(--papel);
+}
+.portada p{
+  font-size:.86rem;color:rgba(247,239,226,.55);
+  margin:0;letter-spacing:.03em;
+}
+.abrir{
+  margin-top:30px;
+  font-family:var(--sans);font-size:.78rem;font-weight:500;
+  letter-spacing:.14em;color:var(--brasa);
+  background:none;border:0;padding:12px 18px;
+  cursor:pointer;
+  animation:respirar 2.8s ease-in-out infinite;
+}
+@keyframes respirar{0%,100%{opacity:.55}50%{opacity:1}}
+
+/* ══════════════════════════════════════════════
+   2 · LA CARTA — el menú de la velada
+   ══════════════════════════════════════════════ */
+.carta{
+  background:var(--papel);
+  color:var(--tinta);
+  border-radius:2px;
+  padding:40px 26px 32px;
+  box-shadow:0 26px 60px rgba(0,0,0,.55), 0 2px 0 rgba(255,255,255,.05);
+  background-image:repeating-linear-gradient(0deg,rgba(51,38,31,.028) 0 1px,transparent 1px 4px);
+  transform:translateY(22px) scale(.97);opacity:0;
+}
+body.abierta .carta{transform:none;opacity:1;transition-delay:.18s}
+
+.membrete{text-align:center;margin-bottom:30px}
+.membrete .para{
+  font-family:var(--sans);font-size:.72rem;font-weight:600;
+  letter-spacing:.16em;color:var(--vino);margin:0 0 12px;
+}
+.membrete h2{
+  font-family:var(--serif);font-weight:300;
+  font-size:clamp(1.9rem,8.5vw,2.5rem);line-height:1.12;
+  margin:0 0 14px;color:var(--tinta);
+}
+.membrete blockquote{
+  font-family:var(--serif);font-style:italic;font-weight:300;
+  font-size:1.08rem;line-height:1.55;color:var(--tinta-suave);
+  margin:0;padding:0 6px;
+}
+.filete{
+  width:52px;height:1px;margin:22px auto;
+  background:var(--vino);opacity:.45;
+}
+
+/* Los renglones del menú, con guía punteada */
+.menu{margin:0 0 30px}
+.plato{
+  display:flex;align-items:baseline;gap:4px;
+  padding:11px 0;
+}
+.plato + .plato{border-top:1px solid rgba(51,38,31,.09)}
+.plato dt{
+  font-family:var(--serif);font-style:italic;font-weight:400;
+  font-size:1.02rem;color:var(--vino);flex:0 0 auto;
+}
+.guia{
+  flex:1 1 auto;min-width:14px;
+  border-bottom:1px dotted rgba(51,38,31,.32);
+  transform:translateY(-.32em);
+}
+.plato dd{
+  margin:0;flex:0 1 auto;text-align:right;
+  font-size:.95rem;font-weight:500;color:var(--tinta);
+  max-width:62%;
+}
+.plato dd small{
+  display:block;font-size:.78rem;font-weight:400;
+  color:var(--tinta-suave);margin-top:2px;
+}
+
+/* Cuenta regresiva */
+.cuenta{
+  display:flex;justify-content:center;gap:20px;
+  padding:18px 0 4px;margin-bottom:26px;
+  border-top:1px solid rgba(51,38,31,.09);
+  border-bottom:1px solid rgba(51,38,31,.09);
+}
+.cuenta div{text-align:center;min-width:42px}
+.cuenta b{
+  display:block;font-family:var(--serif);font-weight:400;
+  font-size:1.85rem;line-height:1;color:var(--tinta);
+  font-variant-numeric:tabular-nums;
+}
+.cuenta i{
+  display:block;font-style:normal;font-size:.66rem;
+  letter-spacing:.1em;color:var(--tinta-suave);margin-top:6px;
+}
+.cuenta.llego{display:block;text-align:center}
+.cuenta.llego b{font-size:1.4rem;font-family:var(--serif);font-style:italic}
+
+/* Botones */
+.acciones{text-align:center}
+.si{
+  display:block;width:100%;
+  font-family:var(--sans);font-size:1.02rem;font-weight:600;
+  letter-spacing:.02em;
+  color:#2B1710;background:var(--brasa);
+  border:0;border-radius:2px;padding:17px 20px;
+  cursor:pointer;
+  transition:transform .15s ease, box-shadow .2s ease, background .2s ease;
+  box-shadow:0 6px 18px rgba(224,163,63,.34);
+}
+.si:hover{background:#EFB355;transform:translateY(-2px);box-shadow:0 10px 24px rgba(224,163,63,.4)}
+.si:active{transform:translateY(0)}
+
+.zona-no{position:relative;height:66px;margin-top:6px}
+.no{
+  position:absolute;left:50%;top:50%;
+  transform:translate(-50%,-50%);
+  font-family:var(--sans);font-size:.88rem;
+  color:var(--tinta-suave);background:none;
+  border:0;padding:12px 16px;cursor:pointer;
+  white-space:nowrap;
+  transition:transform .28s cubic-bezier(.2,.8,.3,1), color .2s ease;
+}
+.no:hover{color:var(--vino)}
+
+.firma{
+  text-align:center;margin:26px 0 0;
+  font-family:var(--mano);font-size:1.5rem;
+  color:var(--vino);line-height:1.3;
+}
+
+/* ══════════════════════════════════════════════
+   3 · CONFIRMACIÓN
+   ══════════════════════════════════════════════ */
+.confirmado{text-align:center;padding:16px 8px}
+.confirmado .marca{
+  width:64px;height:64px;margin:0 auto 26px;
+  border:1px solid rgba(224,163,63,.55);border-radius:50%;
+  display:grid;place-items:center;
+  color:var(--brasa);font-size:1.6rem;
+}
+.confirmado h2{
+  font-family:var(--serif);font-weight:300;
+  font-size:clamp(2rem,9vw,2.6rem);line-height:1.15;
+  margin:0 0 16px;color:var(--papel);
+}
+.confirmado p{
+  font-family:var(--serif);font-style:italic;font-weight:300;
+  font-size:1.12rem;color:rgba(247,239,226,.72);
+  margin:0 auto 32px;max-width:26ch;
+}
+.avisar{
+  display:inline-block;
+  font-family:var(--sans);font-size:.98rem;font-weight:600;
+  color:#2B1710;background:var(--brasa);
+  text-decoration:none;border-radius:2px;
+  padding:16px 30px;
+  box-shadow:0 6px 18px rgba(224,163,63,.3);
+  transition:transform .15s ease,background .2s ease;
+}
+.avisar:hover{background:#EFB355;transform:translateY(-2px)}
+.volver{
+  display:block;margin:24px auto 0;
+  background:none;border:0;cursor:pointer;
+  font-size:.8rem;color:rgba(247,239,226,.45);
+}
+
+/* Chispas que suben desde la vela */
+.chispa{
+  position:fixed;bottom:-14px;width:5px;height:5px;border-radius:50%;
+  background:var(--brasa);pointer-events:none;z-index:5;
+  animation:subir linear forwards;
+}
+@keyframes subir{
+  0%{transform:translateY(0) scale(.5);opacity:0}
+  12%{opacity:.95}
+  100%{transform:translateY(-102vh) translateX(var(--deriva)) scale(1);opacity:0}
+}
+
+/* Foco visible para teclado */
+:focus-visible{outline:2px solid var(--brasa);outline-offset:3px;border-radius:2px}
+
+@media (min-width:480px){
+  body{font-size:18px}
+  .carta{padding:48px 38px 36px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.001ms!important;animation-iteration-count:1!important;
+    transition-duration:.001ms!important;
+  }
+  .llama{animation:none}
+}
+</style>
+</head>
+
+<body class="cerrada">
+
+<div class="escena">
+
+  <!-- ─────────── PORTADA ─────────── -->
+  <section class="portada vista" id="portada" role="button" tabindex="0" aria-label="Abrir la invitación">
+    <div class="vela" aria-hidden="true">
+      <div class="llama"></div>
+      <div class="cirio"></div>
+    </div>
+
+    <p class="invitada" id="pInvitada">Para ti</p>
+
+    <div class="monograma" aria-hidden="true">
+      <div class="iniciales" id="pIniciales">A <span>&amp;</span> J</div>
+    </div>
+
+    <h1>Una mesa<br>para dos</h1>
+    <p>Reservada esta semana</p>
+
+    <button class="abrir" type="button">TOCA PARA ABRIR</button>
+  </section>
+
+  <!-- ─────────── LA CARTA ─────────── -->
+  <main class="carta vista" id="carta" hidden>
+
+    <header class="membrete">
+      <p class="para" id="cPara">PARA ELLA</p>
+      <h2>La velada</h2>
+      <blockquote id="cFrase">Sin motivo, sin ocasión especial. Solo tú, yo y una mesa esperándonos.</blockquote>
+    </header>
+
+    <div class="filete" aria-hidden="true"></div>
+
+    <dl class="menu">
+      <div class="plato">
+        <dt>Día</dt><span class="guia" aria-hidden="true"></span>
+        <dd id="cDia">—</dd>
+      </div>
+      <div class="plato">
+        <dt>Hora</dt><span class="guia" aria-hidden="true"></span>
+        <dd id="cHora">—</dd>
+      </div>
+      <div class="plato">
+        <dt>Lugar</dt><span class="guia" aria-hidden="true"></span>
+        <dd id="cLugar">—<small id="cDireccion"></small></dd>
+      </div>
+      <div class="plato">
+        <dt>Vestuario</dt><span class="guia" aria-hidden="true"></span>
+        <dd id="cVestuario">—</dd>
+      </div>
+      <div class="plato">
+        <dt>Te recojo</dt><span class="guia" aria-hidden="true"></span>
+        <dd id="cRecoger">—</dd>
+      </div>
+    </dl>
+
+    <div class="cuenta" id="cuenta" aria-live="polite">
+      <div><b id="dd">00</b><i>días</i></div>
+      <div><b id="hh">00</b><i>horas</i></div>
+      <div><b id="mm">00</b><i>min</i></div>
+      <div><b id="ss">00</b><i>seg</i></div>
+    </div>
+
+    <div class="acciones">
+      <button class="si" type="button" id="btnSi">Sí, ahí estaré</button>
+      <div class="zona-no">
+        <button class="no" type="button" id="btnNo">Ese día no puedo</button>
+      </div>
+    </div>
+
+    <p class="firma" id="cFirma">Con amor, J</p>
+  </main>
+
+  <!-- ─────────── CONFIRMACIÓN ─────────── -->
+  <section class="confirmado vista" id="confirmado" hidden>
+    <div class="marca" aria-hidden="true">✦</div>
+    <h2>Mesa para dos,<br>confirmada</h2>
+    <p id="fConfirma">Ya no me la cambias. Paso por ti.</p>
+    <a class="avisar" id="btnAvisar" href="#" target="_blank" rel="noopener">Avísale por WhatsApp</a>
+    <button class="volver" type="button" id="btnVolver">Ver la invitación otra vez</button>
+  </section>
+
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════
+   ▼▼▼  LO ÚNICO QUE DEBES EDITAR  ▼▼▼
+   Cambia estos valores por los tuyos y guarda el archivo.
+   ═══════════════════════════════════════════════════════ */
+const INVITACION = {
+
+  ella          : "Ana",              // el nombre de ella
+  tu            : "Juan",             // tu nombre
+
+  // Fecha y hora de la cena. Formato: "AAAA-MM-DDTHH:MM"  (hora en 24h)
+  fechaHora     : "2026-10-09T19:30",
+
+  lugar         : "Restaurante El Cielo",
+  direccion     : "Cra. 40 #10A-22, El Poblado",
+  vestuario     : "Lo que te haga sentir hermosa",
+  paso          : "7:00 p. m. en tu casa",
+
+  frase         : "Sin motivo, sin ocasión especial. Solo tú, yo y una mesa esperándonos.",
+  firma         : "Con amor, Juan",
+  confirmacion  : "Ya no me la cambias. Paso por ti.",
+
+  // TU número de WhatsApp, con indicativo del país y sin +, espacios ni guiones.
+  // Colombia es 57. Ejemplo: 573001234567
+  whatsapp      : "573001234567",
+  mensaje       : "Acepto la cena. Ahí estaré. 🤍",
+
+  // Lo que va diciendo el botón de "no" cada vez que ella lo intenta tocar
+  excusas       : ["Ese día no puedo","¿Segura?","Piénsalo bien","Hay postre","Ya reservé","Está bien, ríndete"]
+};
+/* ═══════════════════════════════════════════════════════
+   ▲▲▲  DE AQUÍ PARA ABAJO NO NECESITAS TOCAR NADA  ▲▲▲
+   ═══════════════════════════════════════════════════════ */
+
+const $ = id => document.getElementById(id);
+const fecha = new Date(INVITACION.fechaHora);
+const suave = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ── Rellenar los textos ── */
+function pintar(){
+  const ini = (INVITACION.ella[0] || "A").toUpperCase();
+  const iny = (INVITACION.tu[0]   || "J").toUpperCase();
+
+  $("pInvitada").textContent = "Para " + INVITACION.ella;
+  $("pIniciales").innerHTML  = ini + ' <span>&amp;</span> ' + iny;
+  $("cPara").textContent     = "PARA " + INVITACION.ella.toUpperCase();
+  $("cFrase").textContent    = INVITACION.frase;
+
+  const dia  = new Intl.DateTimeFormat("es-CO",{weekday:"long",day:"numeric",month:"long"}).format(fecha);
+  const hora = new Intl.DateTimeFormat("es-CO",{hour:"numeric",minute:"2-digit",hour12:true}).format(fecha);
+
+  $("cDia").textContent       = dia.charAt(0).toUpperCase() + dia.slice(1);
+  $("cHora").textContent      = hora;
+  $("cLugar").firstChild.textContent = INVITACION.lugar;
+  $("cDireccion").textContent = INVITACION.direccion;
+  $("cVestuario").textContent = INVITACION.vestuario;
+  $("cRecoger").textContent   = INVITACION.paso;
+  $("cFirma").textContent     = INVITACION.firma;
+  $("fConfirma").textContent  = INVITACION.confirmacion;
+
+  $("btnAvisar").href = "https://wa.me/" + INVITACION.whatsapp +
+                        "?text=" + encodeURIComponent(INVITACION.mensaje);
+
+  document.title = "Una mesa para dos · " + INVITACION.ella;
+}
+
+/* ── Cuenta regresiva ── */
+const dos = n => String(n).padStart(2,"0");
+function contar(){
+  const falta = fecha - new Date();
+  const caja = $("cuenta");
+
+  if (falta <= 0){
+    caja.classList.add("llego");
+    caja.innerHTML = "<b>" + (falta > -6*3600e3 ? "Es esta noche" : "Fue una gran noche") + "</b>";
+    return false;
+  }
+  const s = Math.floor(falta/1000);
+  $("dd").textContent = dos(Math.floor(s/86400));
+  $("hh").textContent = dos(Math.floor(s%86400/3600));
+  $("mm").textContent = dos(Math.floor(s%3600/60));
+  $("ss").textContent = dos(s%60);
+  return true;
+}
+
+/* ── Abrir la carta ── */
+let abierta = false;
+function abrir(){
+  if (abierta) return;
+  abierta = true;
+  $("carta").hidden = false;
+  requestAnimationFrame(()=> document.body.classList.add("abierta"));
+  setTimeout(()=>{ $("portada").hidden = true; $("carta").focus?.(); }, 620);
+}
+$("portada").addEventListener("click", abrir);
+$("portada").addEventListener("keydown", e=>{
+  if (e.key === "Enter" || e.key === " "){ e.preventDefault(); abrir(); }
+});
+
+/* ── El botón que se escapa (pero nunca se vuelve una trampa) ── */
+let intentos = 0;
+const no = $("btnNo");
+function escapar(){
+  intentos++;
+  no.textContent = INVITACION.excusas[Math.min(intentos, INVITACION.excusas.length-1)];
+
+  if (suave || intentos >= INVITACION.excusas.length - 1){
+    no.style.transform = "translate(-50%,-50%)";   // se rinde y se queda quieto
+    return;
+  }
+  const zona = no.parentElement.getBoundingClientRect();
+  const caja = no.getBoundingClientRect();
+  const maxX = Math.max(0, (zona.width  - caja.width )/2 - 6);
+  const maxY = Math.max(0, (zona.height - caja.height)/2 - 4);
+  const x = (Math.random()*2 - 1) * maxX;
+  const y = (Math.random()*2 - 1) * maxY;
+  no.style.transform = `translate(calc(-50% + ${x.toFixed(0)}px), calc(-50% + ${y.toFixed(0)}px))`;
+}
+no.addEventListener("pointerenter", e => { if (e.pointerType === "mouse") escapar(); });
+no.addEventListener("click", escapar);
+
+/* ── Decir que sí ── */
+function chispas(){
+  if (suave) return;
+  for (let i=0; i<26; i++){
+    const c = document.createElement("div");
+    c.className = "chispa";
+    c.style.left = Math.random()*100 + "vw";
+    c.style.setProperty("--deriva", (Math.random()*90-45).toFixed(0) + "px");
+    c.style.animationDuration = (2.6 + Math.random()*2.2).toFixed(2) + "s";
+    c.style.animationDelay = (Math.random()*1.4).toFixed(2) + "s";
+    c.style.opacity = (.45 + Math.random()*.55).toFixed(2);
+    document.body.appendChild(c);
+    setTimeout(()=> c.remove(), 6200);
+  }
+}
+$("btnSi").addEventListener("click", ()=>{
+  $("carta").hidden = true;
+  $("confirmado").hidden = false;
+  chispas();
+});
+$("btnVolver").addEventListener("click", ()=>{
+  $("confirmado").hidden = true;
+  $("carta").hidden = false;
+});
+
+/* ── Arranque ── */
+pintar();
+if (contar()) setInterval(contar, 1000);
+</script>
+</body>
+</html>
